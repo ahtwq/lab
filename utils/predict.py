@@ -84,7 +84,7 @@ def predict(model, dir, output_res=None, batch_size=10, num_classes=6):
 	print('test_loss:{:.4f}, test_acc:{:4f}'.format(test_res['loss'], test_res['accuracy']))
 	print(test_res_com['conf_matrix'])
 
-	infolist=[os.path.basename(args.dir), 'test acc.', test_res['accuracy'], 'test acc. com.', test_res_com['accuracy']]
+	infolist=[os.path.basename(dir), 'test acc.', test_res['accuracy'], 'test acc. com.', test_res_com['accuracy']]
 	cms = [test_res['conf_matrix'], test_res_com['conf_matrix']]
 	writer.writer_in(cms, infolist, class_names)
 
