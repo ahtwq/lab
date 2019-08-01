@@ -164,7 +164,7 @@ for epoch in range(0, args.epochs):
 	results['epoch'+str(epoch)] = [round(train_res['accuracy'],6), round(test_res['accuracy'],6)]
 	
     ## Save model
-	if test_res['accuracy'] >= best_acc_on_dev -2:
+	if test_res['accuracy'] >= 0:
 		best_acc_on_dev = test_res['accuracy']
 		utils.save_checkpoint(args.dir, epoch, state_dict=model.state_dict())
 

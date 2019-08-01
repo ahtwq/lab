@@ -68,6 +68,7 @@ def predict(model, dir, output_res=None, batch_size=10, num_classes=6):
 			num_workers=4,
 		)
 	}
+	
 	# model
 	weight_best = torch.load(dir)['state_dict']
 	model.load_state_dict(weight_best)
