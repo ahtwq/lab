@@ -182,6 +182,7 @@ print()
 print('Train over. The top3 by test accuracy: ')
 top3 = sorted(results.items(), key=lambda item:item[1][1], reverse=True)[0:3]
 print(top3)
+print()
 orders = [i[0][-1] for i in top3 if i[1][-1] > 0.0]
 
 for i,item in enumerate(orders):
@@ -190,4 +191,5 @@ for i,item in enumerate(orders):
 	dir = os.path.join(args.dir, 'checkpoint-{}.pt'.format(i))
 	output_res = os.path.join(args.dir, 'test-{}.txt'.format(i))
 	utils.predict(model, dir, output_res, num_classes)
+	print()
 
