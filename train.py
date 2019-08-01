@@ -181,12 +181,12 @@ for epoch in range(0, args.epochs):
 print('Train over. The top3 by test accuracy: ')
 top3 = sorted(results.items(), key=lambda item:item[1][1], reverse=True)[0:3]
 print(top3)
-orders = [i[0][0][-1] for i in top3 if i[0][1][-1] > 70.0]
+orders = [i[0][-1] for i in top3 if i[1][-1] > 70.0]
 
 for i,item in enumerate(orders):
 	print('top'+str(i))
-	print('*'*50)
+	print('*'*30)
 	dir = os.path.join(args.dir, 'checkpoint-{}.pt'.format(i))
 	output_res = os.path.join(args.dir, 'test-{}.txt'.format(i))
-	utils.predict(model, dir, output_res)
+	utils.predict(model, dir, output_res, num_classes)
 

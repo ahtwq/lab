@@ -53,7 +53,12 @@ val_transform =  transforms.Compose([
 img_path = '/Storage/DiamondData/bbg_png_1024_rotate10_new'
 test_txt = '../DataTxt/dataset_uniform/test_0911_rotate*10.txt'
 
-def predict(model, dir, output_res=None, batch_size=10):
+def predict(model, dir, output_res=None, batch_size=10, num_classes=6):
+	order = os.path.basename(dir)[-4]
+
+	writer = utils.wirter_cm(fpath=args.dir+'/test-{}.csv'.format(order))
+	class_names = ['VVS', 'VS1', 'VS2', 'SI1', 'SI2']
+
 	test_set = Mydataset(img_root=img_path, txtfile=test_txt, label_transform=None, img_transform=val_transform)
 	loaders = {
 		'test': DataLoader(
@@ -69,7 +74,6 @@ def predict(model, dir, output_res=None, batch_size=10):
 
 	# loss func
 	criterion = nn.L1Loss()
-	order = os.path.basename(dir)[-4]
 
 	test_res = utils.eval(loaders['test'], model, criterion, num_classes)
 	print('test_loss:{:.4f}, test_acc:{:4f}'.format(test_res['loss'], test_res['accuracy']))
@@ -81,6 +85,6 @@ def predict(model, dir, output_res=None, batch_size=10):
 
 	infolist=[os.path.basename(args.dir), 'test acc.', test_res['accuracy'], 'test acc. com.', test_res_com['accuracy']]
 	cms = [test_res['conf_matrix'], test_res_com['conf_matrix']]
-	utils.writer_cm(cms, infolist, csvname='{}/test-{}.csv'.format(args.dir, order), class_names=class_names)
+	writer.writer_in(cms, infolist, class_names)
 
 
