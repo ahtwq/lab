@@ -185,7 +185,7 @@ print(top3)
 orders = [i[0][-1] for i in top3 if i[1][-1] > 0.0]
 
 for i,item in enumerate(orders):
-	print('top'+str(i))
+	print('top'+str(i+1))
 	print('*'*30)
 	dir = os.path.join(args.dir, 'checkpoint-{}.pt'.format(i))
 	output_res = os.path.join(args.dir, 'test-{}.txt'.format(i))
