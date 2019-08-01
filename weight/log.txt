@@ -1,1 +1,2 @@
 epoch	Train Loss	Train Acc.	Valid Loss	Valid Acc.	
+0     	1.550679	17.500000	1.627564	7.641921	
