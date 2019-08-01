@@ -55,8 +55,8 @@ test_txt = '../DataTxt/dataset_uniform/test_0911_rotate*10.txt'
 
 def predict(model, dir, output_res=None, batch_size=10, num_classes=6):
 	order = os.path.basename(dir)[-4]
-
-	writer = utils.wirter_cm(fpath=dir+'/test-{}.csv'.format(order))
+	root = dir.split('/')[0]
+	writer = utils.wirter_cm(fpath='{}/test-{}.csv'.format(root))
 	class_names = ['VVS', 'VS1', 'VS2', 'SI1', 'SI2']
 
 	test_set = Mydataset(img_root=img_path, txtfile=test_txt, label_transform=None, img_transform=val_transform)

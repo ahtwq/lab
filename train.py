@@ -156,7 +156,7 @@ for epoch in range(0, args.epochs):
 
 	logger.append([epoch, train_res['loss'], train_res['accuracy'], test_res['loss'], test_res['accuracy']])
 	logger.plot()
-	utils.savefig(os.path.join(args.dir, 'accuracy.eps'))
+	utils.savefig(os.path.join(args.dir, 'accuracy.jpg'))
 	
 	infolist=['epoch{}'.format(epoch), 'train acc', train_res['accuracy'], 'test acc', test_res['accuracy']]
 	cms = [train_res['conf_matrix'], test_res['conf_matrix']]
