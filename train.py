@@ -158,7 +158,7 @@ for epoch in range(0, args.epochs):
 	logger.plot()
 	utils.savefig(os.path.join(args.dir, 'accuracy.eps'))
 	
-	infolist=['epoch{}'.format(epoch), 'train acc.', train_res['accuracy'], 'test acc.', test_res['accuracy']]
+	infolist=['epoch{}'.format(epoch), 'train acc', train_res['accuracy'], 'test acc', test_res['accuracy']]
 	cms = [train_res['conf_matrix'], test_res['conf_matrix']]
 	writer.writer_in(cms, infolist,class_names=class_names)
 	results['epoch'+str(epoch)] = [round(train_res['accuracy'],6), round(test_res['accuracy'],6)]
@@ -178,10 +178,11 @@ for epoch in range(0, args.epochs):
 		table = table.split('\n')[2]
 	print(table)
 
+print()
 print('Train over. The top3 by test accuracy: ')
 top3 = sorted(results.items(), key=lambda item:item[1][1], reverse=True)[0:3]
 print(top3)
-orders = [i[0][-1] for i in top3 if i[1][-1] > 70.0]
+orders = [i[0][-1] for i in top3 if i[1][-1] > 0.0]
 
 for i,item in enumerate(orders):
 	print('top'+str(i))
