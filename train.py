@@ -77,7 +77,7 @@ train_transform = transforms.Compose([
                         transforms.Resize(256),
                         transforms.RandomCrop(224),
                         transforms.RandomRotation(18, resample=Image.BICUBIC),
-                        transforms.ColorJitter(0.15,0.15,0.15),
+                        transforms.ColorJitter(0.2,0.2,0.2),
                         transforms.RandomHorizontalFlip(),
                         transforms.RandomVerticalFlip(),
                         transforms.ToTensor(),
@@ -94,9 +94,6 @@ val_transform =  transforms.Compose([
 img_root = '/Storage/DiamondData/bbg_png_1024_rotate10_new'
 train_txt = '../DataTxt/dataset_uniform/train_1-10-0911_rotate*10.txt'
 val_txt = '../DataTxt/dataset_uniform/val_1-10-0911_rotate*10.txt'
-
-train_txt = val_txt
-val_txt = '../DataTxt/dataset_uniform/test_0911_rotate*10.txt'
 
 train_set = Mydataset(img_root=img_root, txtfile=train_txt, img_transform=train_transform)                       
 test_set = Mydataset(img_root=img_root, txtfile=val_txt, img_transform=val_transform)
@@ -121,7 +118,7 @@ print('Building model')
 num_classes = 6
 pre_model = models.EfficientNet
 #pre_model = pre_model.from_pretrained('efficientnet-b1')
-pre_model = pre_model.from_name('efficientnet-b0')
+pre_model = pre_model.from_name('efficientnet-b2')
 model = models.multiScale_Bx(pre_model, num_classes=1)
 use_gpu = torch.cuda.is_available()
 
@@ -142,7 +139,7 @@ print('Starting train model')
 columns = ['ep', 'lr', 'tr_loss', 'tr_acc[%]', 'te_loss', 'te_acc[%]', 'time[m]']
 class_names = ['VVS', 'VS1', 'VS2', 'SI1', 'SI2']
 results = {}
-best_acc_on_dev = 70.0
+best_acc_on_dev = 72.0
 logger = utils.Logger(fpath=os.path.join(args.dir,'log.txt'))
 logger.set_names(['epoch', 'Train Loss', 'Train Acc.', 'Valid Loss', 'Valid Acc.'])
 writer = utils.wirter_cm(fpath=args.dir+'/train.csv')
@@ -164,7 +161,7 @@ for epoch in range(0, args.epochs):
 	results['epoch'+str(epoch)] = [round(train_res['accuracy'],6), round(test_res['accuracy'],6)]
 	
     ## Save model
-	if test_res['accuracy'] >= 0:
+	if test_res['accuracy'] >= best_acc_on_dev-2.0:
 		best_acc_on_dev = test_res['accuracy']
 		utils.save_checkpoint(args.dir, epoch, state_dict=model.state_dict())
 
