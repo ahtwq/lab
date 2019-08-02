@@ -31,7 +31,7 @@ args = parser.parse_args()
 print(args)
 
 ## python predict.py --dir=weight/checkpoint-5.pt --batch_size=10 --test_file=test --output_res=test0911.txt
-
+## hello
 ## seed fix
 torch.backends.cudnn.benchmark = True
 torch.manual_seed(args.seed)
